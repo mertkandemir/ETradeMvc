@@ -1,0 +1,73 @@
+﻿@using System.Globalization
+
+@model List<CartModel>
+
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+    if (Model.Count == 1)
+    {
+        <span class="text-success">@Model.Count item found in cart.</span>
+    }
+    else
+    {
+        <span class="text-success">@Model.Count items found in cart.</span>
+    }
+    <br />
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().ProductName)
+            </th>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().UserName)
+            </th>
+            <th>
+                @Html.LabelFor(model => model.FirstOrDefault().UnitPrice)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.ProductName
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+                <td>
+                    @item.UnitPrice
+                </td>
+                <td>
+                    <a href="@Url.Action("DeleteFromCart", new { id = item.Id })" title="Delete from Cart"><i class="fa fa-trash-o fa-2x"></i></a>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+
+            </td>
+            <td>
+
+            </td>
+            <td>
+                <b>Sum: @Model.Sum(model => model.UnitPrice).ToString(new CultureInfo("en"))</b>
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+    </table>
+}
+else
+{
+    <span class="text-danger">No items found in cart.</span>
+}

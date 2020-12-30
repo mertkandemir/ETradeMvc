@@ -1,0 +1,23 @@
+﻿@model ProductModel
+
+@{
+    ViewBag.Title = "Delete Product";
+}
+
+<h2>Delete Product</h2>
+
+<h3>Are you sure you want to delete this product?</h3>
+
+@Html.Partial("_ProductDetails", Model)
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.ImagePath)
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+

@@ -1,0 +1,67 @@
+﻿@model ProductModel
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CategoryName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitPrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDateText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDateText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDateText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDateText)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+            @if (Model.ImagePath != null)
+            {
+                <img src="@Model.ImagePath" class="img-responsive" />
+            }
+        </dd>
+
+    </dl>
+</div>

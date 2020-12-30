@@ -1,0 +1,14 @@
+﻿@model ProductModel
+
+@{
+    ViewBag.Title = "Product Details";
+}
+
+<h2>Product Details</h2>
+
+@Html.Partial("_ProductDetails", Model)
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

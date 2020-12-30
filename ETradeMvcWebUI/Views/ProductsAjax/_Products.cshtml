@@ -1,0 +1,55 @@
+﻿@model ProductsIndexViewModel
+
+@if (Model.Products.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().StockAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().CreateDateText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().UpdateDateText)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StockAmount)
+                    @Html.Raw(item.StockAmountText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDateText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDateText)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+}

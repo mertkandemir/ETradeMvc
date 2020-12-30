@@ -1,0 +1,186 @@
+﻿@model ProductsIndexViewModel
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h2>Product List</h2>
+
+<p>
+    @*<a href="/Products/Create">Create New</a>*@
+    @*@Html.ActionLink("Create New", "Create")*@
+    <a href="@Url.Action("Create", "Products")" title="Create New"><i class="fa fa-plus fa-2x"></i></a>
+</p>
+<span class="text-success">@ViewBag.Message</span>
+<br />
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Get, new { id = "formProducts" }))
+{
+    <div class="row div-rowpadding">
+        <div class="col-md-1">
+            @Html.DisplayNameFor(model => model.Name)
+        </div>
+        <div class="col-md-5">
+            @*@Html.TextBox("Name", null, new { @class = "form-control", placeholder = "Enter product name" })*@
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Enter product name" })
+        </div>
+        <div class="col-md-2">
+            @*<label class="label-leftmargin">Category</label>*@
+            <label class="label-leftmargin">
+                @Html.DisplayNameFor(model => model.Categories)
+            </label>
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.CategoryId, Model.Categories, "-- All --", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row div-rowpadding">
+        <div class="col-md-1">
+            @Html.DisplayNameFor(model => model.UnitPriceMin)
+        </div>
+        <div class="col-md-5">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.UnitPriceMin, new { @class = "form-control", placeholder = "Enter minimum value" })
+                <span class="input-group-addon">-</span>
+                @Html.TextBoxFor(model => model.UnitPriceMax, new { @class = "form-control", placeholder = "Enter maximum value" })
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label class="label-leftmargin">@Html.DisplayNameFor(model => model.CreateDateMin)</label>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.CreateDateMin, new { @class = "form-control tbDate", placeholder = "Enter minimum value" })
+                <span class="input-group-addon">-</span>
+                @Html.TextBoxFor(model => model.CreateDateMax, new { @class = "form-control tbDate", placeholder = "Enter maximum value" })
+            </div>
+        </div>
+    </div>
+    <div class="row div-rowpadding">
+        <div class="col-md-offset-1 col-md-5">
+            <button type="submit" class="btn btn-success">Ara</button>
+            &nbsp;
+            @*<button type="reset" class="btn btn-warning">Temizle</button>*@
+            @Html.ActionLink("Temizle", "Index", "Products", new { @class = "btn btn-warning" })
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-2">
+                    @Html.DisplayNameFor(model => model.OrderBy)
+                </div>
+                <div class="col-md-6">
+                    @Html.DropDownListFor(model => model.OrderBy, Model.Order, new { @class = "form-control", id = "ddlOrder" })
+                </div>
+                <div class="col-md-2">
+                    @Html.DisplayNameFor(model => model.PageNo)
+                </div>
+                <div class="col-md-2">
+                    @Html.DropDownListFor(model => model.PageNo, Model.Pages, new {@class = "form-control", id = "ddlPageNo"})
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<br />
+
+@if (Model.Products.Count > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().StockAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().CreateDateText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().UpdateDateText)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Products.FirstOrDefault().ImagePath)
+            </th>
+
+            <th>
+                
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StockAmount)
+                    @Html.Raw(item.StockAmountText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreateDateText)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateDateText)
+                </td>
+                
+                <td>
+                    @if (item.ImagePath != null)
+                    {
+                        @*<img src="@item.ImagePath" class="img-thumbnail" />*@
+                        <img src="@item.ImagePath" width="200" height="200" />
+                    }
+                </td>
+
+                <td>
+                    <a href="@Url.Action("AddToCart", "Cart", new {id = item.Id})" title="Add to Cart" target="_blank"><i class="fa fa-shopping-cart fa-2x"></i></a> |
+
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
+                    <a href="@Url.Action("Edit", "Products", new {id = item.Id})" title="Edit"><i class="fa fa-pencil-square-o fa-2x"></i></a> |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                    <a href="@Url.Action("Details", "Products", new {id = item.Id})" title="Details"><i class="fa fa-info-circle fa-2x"></i></a> |
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                    <a href="@Url.Action("Delete", "Products", new {id = item.Id})" title="Delete"><i class="fa fa-remove fa-2x"></i></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.tbDate').datepicker({
+                clearBtn: true,
+                language: "en",
+                todayHighlight: true,
+                autoclose: true,
+                orientation: "bottom auto"
+            });
+
+            $("#ddlPageNo").change(function() {
+                $("#formProducts").submit();
+            });
+
+            $("#ddlOrder").change(function() {
+                $("#formProducts").submit();
+            });
+        });
+    </script>
+}

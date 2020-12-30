@@ -1,0 +1,67 @@
+﻿@model UserModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<br />
+@if (ViewBag.Message != null)
+{
+    <label class="text-danger">@ViewBag.Message</label>
+}
+<br />
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.BirthDayText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.TextBoxFor(model => model.BirthDay, new { @class = "form-control", type = "date" })*@
+                @Html.TextBoxFor(model => model.BirthDayText, new { @class = "form-control tbDate" })
+                @Html.ValidationMessageFor(model => model.BirthDayText, "", new { @class = "text-danger" })
+                <br />
+                <label class="text-primary">Please enter birth day to prove that you are over 18 years of age.</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Login" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.tbDate').datepicker({
+                clearBtn: true,
+                language: "en",
+                todayHighlight: true,
+                autoclose: true,
+                orientation: "bottom auto"
+            });
+        });
+    </script>
+}
